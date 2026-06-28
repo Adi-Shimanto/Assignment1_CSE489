@@ -129,12 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(AppConstants.paddingMedium),
       child: Row(
         children: [
-          // Left side - Amount Display and Change Table
+
           Expanded(
             flex: 1,
             child: Column(
               children: [
-                // Amount Display
+
                 Container(
                   padding: EdgeInsets.all(AppConstants.paddingMedium),
                   decoration: BoxDecoration(
