@@ -1,17 +1,29 @@
-# a1
+VANGTICHAI - Change Calculator App
+===================================
 
-A new Flutter project.
+CSE 489:
+Assignment 1
+Author Name:Md.Hasibul Islam Shimanto
+Brac University
 
-## Getting Started
+IMPLEMENTATION DETAILS:
 
-This project is a starting point for a Flutter application.
+- Framework: Flutter (Dart)
+- Minimum API: Android 5.0 (API 21)
+- Layout: ConstraintLayout alternative using Flutter's LayoutBuilder
 
-A few resources to get you started if this is your first Flutter project:
+FEATURES IMPLEMENTED:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Numeric keypad (0-9 digits + Clear button)
+Change calculation for Taka notes: 500, 100, 50, 20, 10, 5, 2, 1
+Amount display with "Taka:" label
+Portrait & Landscape layouts
+State preservation on orientation change
+Responsive design for phones and tablets
+No hardcoded values - using constants file
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+HOW CHANGE IS CALCULATED:
+-------------------------
+Amount entered via keypad → Convert to integer →
+Divide by 500, 100, 50, 20, 10, 5, 2, 1 →
+Display count for each note
