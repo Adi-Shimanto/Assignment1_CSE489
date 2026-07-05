@@ -49,136 +49,146 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'VangtiChai',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue.shade100,
+        elevation: 0,
+      ),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            // Check if landscape mode
-            bool isLandscape = constraints.maxWidth > constraints.maxHeight;
+        child: Center(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // CHANGED: Reduced max width for tablets
+              double maxContentWidth = 550.0;  // Was 700, now 550
 
-            if (isLandscape) {
-              return _buildLandscapeLayout();
-            } else {
-              return _buildPortraitLayout();
-            }
-          },
+              bool isLandscape = constraints.maxWidth > constraints.maxHeight;
+
+              return SizedBox(
+                width: constraints.maxWidth > maxContentWidth
+                    ? maxContentWidth
+                    : constraints.maxWidth,
+                child: Padding(
+                  padding: EdgeInsets.all(AppConstants.paddingMedium),
+                  child: isLandscape
+                      ? _buildLandscapeLayout()
+                      : _buildPortraitLayout(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
   Widget _buildPortraitLayout() {
-    return Padding(
-      padding: EdgeInsets.all(AppConstants.paddingMedium),
-      child: Column(
-        children: [
-          // Amount Display
-          Container(
-            padding: EdgeInsets.all(AppConstants.paddingMedium),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppConstants.borderColorMedium),
-              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Taka:',
-                  style: TextStyle(
-                    fontSize: AppConstants.headingSize,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  _amount,
-                  style: TextStyle(
-                    fontSize: AppConstants.headingSize,
-                  ),
-                ),
-              ],
-            ),
+    return Column(
+      children: [
+        // Amount Display
+        Container(
+          padding: EdgeInsets.all(AppConstants.paddingMedium),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppConstants.borderColorMedium),
+            borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
           ),
-          SizedBox(height: AppConstants.spacingLarge),
-          // Change Table and Keypad in Row
-          Expanded(
-            child: Row(
-              children: [
-                // Change Table - Left side
-                Expanded(
-                  flex: 1,
-                  child: ChangeTable(changeBreakdown: _changeBreakdown),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Taka:',
+                style: TextStyle(
+                  fontSize: AppConstants.headingSize,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(width: AppConstants.spacingLarge),
-                // Numeric Keypad - Right side
-                Expanded(
-                  flex: 1,
-                  child: NumericKeypad(
-                    onDigitPressed: _onDigitPressed,
-                    onClearPressed: _onClearPressed,
-                  ),
+              ),
+              Text(
+                _amount,
+                style: TextStyle(
+                  fontSize: AppConstants.headingSize,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        SizedBox(height: AppConstants.spacingLarge),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ChangeTable(changeBreakdown: _changeBreakdown),
+              ),
+              SizedBox(width: AppConstants.spacingLarge),
+              Expanded(
+                flex: 1,
+                child: NumericKeypad(
+                  onDigitPressed: _onDigitPressed,
+                  onClearPressed: _onClearPressed,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildLandscapeLayout() {
-    return Padding(
-      padding: EdgeInsets.all(AppConstants.paddingMedium),
-      child: Row(
-        children: [
-
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-
-                Container(
-                  padding: EdgeInsets.all(AppConstants.paddingMedium),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppConstants.borderColorMedium),
-                    borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Taka:',
-                        style: TextStyle(
-                          fontSize: AppConstants.headingSize,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        _amount,
-                        style: TextStyle(
-                          fontSize: AppConstants.headingSize,
-                        ),
-                      ),
-                    ],
-                  ),
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(AppConstants.paddingMedium),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppConstants.borderColorMedium),
+                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
                 ),
-                SizedBox(height: AppConstants.spacingLarge),
-                // Change Table
-                Expanded(
-                  child: ChangeTable(changeBreakdown: _changeBreakdown),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Taka:',
+                      style: TextStyle(
+                        fontSize: AppConstants.headingSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _amount,
+                      style: TextStyle(
+                        fontSize: AppConstants.headingSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: AppConstants.spacingLarge),
+              Expanded(
+                child: ChangeTable(changeBreakdown: _changeBreakdown),
+              ),
+            ],
           ),
-          SizedBox(width: AppConstants.spacingLarge),
-          // Right side - Numeric Keypad
-          Expanded(
-            flex: 1,
-            child: NumericKeypad(
-              onDigitPressed: _onDigitPressed,
-              onClearPressed: _onClearPressed,
-            ),
+        ),
+        SizedBox(width: AppConstants.spacingLarge),
+        Expanded(
+          flex: 1,
+          child: NumericKeypad(
+            onDigitPressed: _onDigitPressed,
+            onClearPressed: _onClearPressed,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

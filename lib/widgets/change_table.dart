@@ -18,7 +18,10 @@ class ChangeTable extends StatelessWidget {
         children: [
           // Header
           Container(
-            padding: EdgeInsets.all(AppConstants.paddingSmall),
+            padding: EdgeInsets.symmetric(
+              vertical: AppConstants.paddingSmall,
+              horizontal: AppConstants.paddingSmall,
+            ),
             decoration: BoxDecoration(
               color: AppConstants.headerBackgroundColor,
               borderRadius: const BorderRadius.only(
@@ -30,7 +33,7 @@ class ChangeTable extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Note',
+                    'Num',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -49,7 +52,7 @@ class ChangeTable extends StatelessWidget {
               ],
             ),
           ),
-          // Rows
+          // Rows - All 8 notes visible
           Expanded(
             child: ListView.builder(
               itemCount: ChangeCalculator.noteDenominations.length,
@@ -59,7 +62,7 @@ class ChangeTable extends StatelessWidget {
 
                 return Container(
                   padding: EdgeInsets.symmetric(
-                    vertical: AppConstants.paddingSmall,
+                    vertical: AppConstants.paddingSmall * 0.4,
                     horizontal: AppConstants.paddingSmall,
                   ),
                   decoration: BoxDecoration(
@@ -73,10 +76,10 @@ class ChangeTable extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '৳$note',
+                          note.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: AppConstants.bodySize,
+                            fontSize: AppConstants.bodySize * 0.8,  // Smaller font
                           ),
                         ),
                       ),
@@ -85,7 +88,7 @@ class ChangeTable extends StatelessWidget {
                           count.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: AppConstants.bodySize,
+                            fontSize: AppConstants.bodySize * 0.8,  // Smaller font
                             fontWeight: FontWeight.bold,
                           ),
                         ),

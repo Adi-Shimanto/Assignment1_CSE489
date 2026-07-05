@@ -15,30 +15,52 @@ class NumericKeypad extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Adjust button size based on available space
-        double buttonSize = constraints.maxWidth / 3.5;
+        // Calculate button size
+        double buttonSize;
+
+
+        if (constraints.maxWidth > 400) {
+          buttonSize = 65.0;
+        } else {
+          buttonSize = constraints.maxWidth / 3.5;
+          if (buttonSize > 70.0) buttonSize = 70.0;
+          if (buttonSize < 50.0) buttonSize = 50.0;
+        }
+
         double fontSize = buttonSize * 0.4;
 
-        return GridView.count(
-          crossAxisCount: 3,
-          childAspectRatio: 1.0,
-          mainAxisSpacing: AppConstants.spacingMedium,
-          crossAxisSpacing: AppConstants.spacingMedium,
-          children: [
-            _buildKeypadButton('7', buttonSize, fontSize),
-            _buildKeypadButton('8', buttonSize, fontSize),
-            _buildKeypadButton('9', buttonSize, fontSize),
-            _buildKeypadButton('4', buttonSize, fontSize),
-            _buildKeypadButton('5', buttonSize, fontSize),
-            _buildKeypadButton('6', buttonSize, fontSize),
-            _buildKeypadButton('1', buttonSize, fontSize),
-            _buildKeypadButton('2', buttonSize, fontSize),
-            _buildKeypadButton('3', buttonSize, fontSize),
-            _buildClearButton(buttonSize, fontSize),
-            _buildKeypadButton('0', buttonSize, fontSize),
-            // Empty space for alignment
-            const SizedBox(),
-          ],
+        return Center(
+          child: SizedBox(
+            width: buttonSize * 3 + AppConstants.spacingMedium * 2,
+            child: GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              childAspectRatio: 1.0,
+              mainAxisSpacing: AppConstants.spacingMedium,
+              crossAxisSpacing: AppConstants.spacingMedium,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                // Row 1: 1, 2, 3
+                _buildKeypadButton('1', buttonSize, fontSize),
+                _buildKeypadButton('2', buttonSize, fontSize),
+                _buildKeypadButton('3', buttonSize, fontSize),
+
+                // Row 2: 4, 5, 6
+                _buildKeypadButton('4', buttonSize, fontSize),
+                _buildKeypadButton('5', buttonSize, fontSize),
+                _buildKeypadButton('6', buttonSize, fontSize),
+
+                // Row 3: 7, 8, 9
+                _buildKeypadButton('7', buttonSize, fontSize),
+                _buildKeypadButton('8', buttonSize, fontSize),
+                _buildKeypadButton('9', buttonSize, fontSize),
+
+                // Row 4: 0, CLEAR
+                _buildKeypadButton('0', buttonSize, fontSize),
+                _buildClearButton(buttonSize, fontSize),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -58,6 +80,7 @@ class NumericKeypad extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 2.0,
+          side: BorderSide(color: Colors.grey.shade300),
         ),
         child: Text(
           digit,
@@ -85,9 +108,12 @@ class NumericKeypad extends StatelessWidget {
           ),
           elevation: 2.0,
         ),
-        child: Icon(
-          Icons.clear,
-          size: fontSize * 1.2,
+        child: Text(
+          'CLEAR',
+          style: TextStyle(
+            fontSize: fontSize * 0.5,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
